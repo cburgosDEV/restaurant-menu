@@ -11,19 +11,39 @@ Route::post('logout', ['App\Http\Controllers\Auth\LoginController', 'logout']);
 //ALL ROUTES
 Route::group(['middleware'=>['auth']], function ()
 {
-    //INDEX
+    //HOME
     Route::prefix('')->group(function ()
     {
         Route::get('/', ['App\Http\Controllers\HomeController', 'index']);
+        Route::get('jsonIndex/{filterText?}', ['App\Http\Controllers\HomeController', 'jsonIndex'])->middleware('role:super');
+    });
+
+    //HOME USER
+    Route::prefix('homeUser')->middleware('role:admin')->group(function ()
+    {
+        Route::get('/', ['App\Http\Controllers\HomeUserController', 'index']);
+        Route::get('jsonIndex/{filterText?}', ['App\Http\Controllers\HomeUserController', 'jsonIndex']);
     });
 
     //USER
-    Route::prefix('user')->group(function () {
+    Route::prefix('user')->middleware('role:super')->group(function () {
         Route::get('', ['App\Http\Controllers\UserController', 'index']);
         Route::get('jsonIndex/{filterText?}', ['App\Http\Controllers\UserController', 'jsonIndex']);
         Route::get('jsonCreate', ['App\Http\Controllers\UserController', 'jsonCreate']);
         Route::post('store', ['App\Http\Controllers\UserController', 'store']);
-        Route::get('jsonDetail/{idCategory}', ['App\Http\Controllers\UserController', 'jsonDetail']);
+        Route::get('jsonDetail/{id}', ['App\Http\Controllers\UserController', 'jsonDetail']);
         Route::post('changePassword', ['App\Http\Controllers\UserController', 'changePassword']);
+    });
+
+    //RESTAURANT
+    Route::prefix('restaurant')->middleware('role:admin')->group(function ()
+    {
+        Route::get('/', ['App\Http\Controllers\RestaurantController', 'index']);
+        Route::get('jsonIndex/{filterText?}', ['App\Http\Controllers\RestaurantController', 'jsonIndex']);
+        Route::get('create', ['App\Http\Controllers\RestaurantController', 'create']);
+        Route::get('jsonCreate', ['App\Http\Controllers\RestaurantController', 'jsonCreate']);
+        Route::post('store', ['App\Http\Controllers\RestaurantController', 'store']);
+        Route::get('update/{id}', ['App\Http\Controllers\RestaurantController', 'update']);
+        Route::get('jsonUpdate/{id}', ['App\Http\Controllers\RestaurantController', 'jsonUpdate']);
     });
 });

@@ -2,17 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Architecture\Structure\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    public function __construct()
+    protected $userService;
+
+    public function __construct(UserService $userService)
     {
-        $this->middleware('auth');
+        $this->userService = $userService;
     }
 
     public function index()
     {
-        return view('home');
+        if($this->userService->getById(Auth::id())->getRoleNames()[0]=='super') return view('home');
+        else return view('homeUser');
+    }
+
+    public function jsonIndex($filterText = '')
+    {
+        return response()->json($this->userService->getAllPaginateToIndexHome($filterText));
+    }
+
+    public function user()
+    {
+        return view('user');
     }
 }

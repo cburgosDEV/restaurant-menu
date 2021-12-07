@@ -4,10 +4,11 @@ let vue = new Vue({
 
     },
     data: {
-        url: $('#baseUrl').val() + '',
+        url: $('#baseUrl').val() + 'homeUser',
         filterText: '',
-        users: [],
+        restaurants : [],
         paginate: {},
+        isLoaded: false,
     },
     computed: {
 
@@ -19,14 +20,15 @@ let vue = new Vue({
         switchResponseServer: function (switchAction, response){
             switch (switchAction){
                 case 'initList':
-                    this.users = response.model;
+                    this.restaurants = response.model;
                     this.paginate = response.paginate;
+                    this.isLoaded = true;
                     break;
             }
         },
         initList: function(page = 1){
             loading(true);
-            let url = this.url + "jsonIndex/" + this.filterText + '?page=' + page;
+            let url = this.url + "/jsonIndex/" + this.filterText + '?page=' + page;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("initList", response.data);
             }).catch((error) => {

@@ -33,9 +33,14 @@ class UserService
         return $this->userRepository->getById($id);
     }
 
-    public function getAllPaginateToIndex($filterText)
+    public function getAllPaginateToIndexUser($filterText)
     {
-        return  $this->userRepository->getAllPaginateToIndex(10, $filterText);
+        return $this->userRepository->getAllPaginateToIndexUser(10, $filterText);
+    }
+
+    public function getAllPaginateToIndexHome($filterText)
+    {
+        return $this->userRepository->getAllPaginateToIndexHome(10, $filterText);
     }
 
     public function store($request)

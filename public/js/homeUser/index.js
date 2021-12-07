@@ -1,16 +1,17 @@
 /******/ (() => { // webpackBootstrap
 var __webpack_exports__ = {};
-/*!****************************************************!*\
-  !*** ./resources/js/project_scripts/home/index.js ***!
-  \****************************************************/
+/*!********************************************************!*\
+  !*** ./resources/js/project_scripts/homeUser/index.js ***!
+  \********************************************************/
 var vue = new Vue({
   el: '#index',
   components: {},
   data: {
-    url: $('#baseUrl').val() + '',
+    url: $('#baseUrl').val() + 'homeUser',
     filterText: '',
-    users: [],
-    paginate: {}
+    restaurants: [],
+    paginate: {},
+    isLoaded: false
   },
   computed: {},
   created: function created() {
@@ -20,8 +21,9 @@ var vue = new Vue({
     switchResponseServer: function switchResponseServer(switchAction, response) {
       switch (switchAction) {
         case 'initList':
-          this.users = response.model;
+          this.restaurants = response.model;
           this.paginate = response.paginate;
+          this.isLoaded = true;
           break;
       }
     },
@@ -30,7 +32,7 @@ var vue = new Vue({
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       loading(true);
-      var url = this.url + "jsonIndex/" + this.filterText + '?page=' + page;
+      var url = this.url + "/jsonIndex/" + this.filterText + '?page=' + page;
       window.axios.get(url).then(function (response) {
         _this.switchResponseServer("initList", response.data);
       })["catch"](function (error) {})["finally"](function (response) {

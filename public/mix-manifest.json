@@ -1,6 +1,10 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/home/index.js": "/js/home/index.js",
+    "/js/homeUser/index.js": "/js/homeUser/index.js",
     "/js/user/index.js": "/js/user/index.js",
+    "/js/restaurant/index.js": "/js/restaurant/index.js",
+    "/js/restaurant/create.js": "/js/restaurant/create.js",
+    "/js/restaurant/update.js": "/js/restaurant/update.js",
     "/css/app.css": "/css/app.css"
 }

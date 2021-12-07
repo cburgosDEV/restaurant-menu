@@ -4,19 +4,34 @@
 <div class="container" id="index">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+            <custom-card
+                card-title="Usuarios">
+                <h6 class="font-weight-light"><i class="fa fa-list"></i> Lista de usuarios</h6>
+                <search-bar @search="search"></search-bar>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre del usuario</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(user, index) in users">
+                        <th>@{{ index + 1 }}.</th>
+                        <td>@{{ user.name }}</td>
+                        <td>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination
+                    align="center"
+                    :data="paginate"
+                    @pagination-change-page="initList">
+                </pagination>
+            </custom-card>
         </div>
     </div>
 </div>

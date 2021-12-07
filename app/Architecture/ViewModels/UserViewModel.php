@@ -6,17 +6,12 @@ use App\Models\User;
 
 class UserViewModel
 {
-    protected $id;
-    protected $name;
-    protected $email;
+    public $id;
+    public $name;
+    public $email;
     protected $password;
-    protected $state;
-    protected $avatar;
-
-    public function __construct()
-    {
-
-    }
+    public $state;
+    public $avatar;
 
     public function generateViewModel(User $model)
     {

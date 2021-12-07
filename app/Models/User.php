@@ -31,7 +31,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function scopeFiltersToIndex($query, $filters)
+    public function scopeFiltersToIndexUser($query, $filters)
+    {
+        $query->where('users.name', 'like', '%' . $filters . '%');
+    }
+
+    public function scopeFiltersToIndexHome($query, $filters)
     {
         $query->where('users.name', 'like', '%' . $filters . '%');
     }

@@ -40,12 +40,29 @@ class UserRepository
         }
     }
 
-    public function getAllPaginateToIndex($pages, $filterText)
+    public function getAllPaginateToIndexUser($pages, $filterText)
     {
         $model = User::select('users.*')
             ->where('users.state', true)
             ->orderBy('users.name')
-            ->filtersToIndex($filterText)
+            ->filtersToIndexUser($filterText)
+            ->paginate($pages);
+
+        $paginatorHelper = new PaginatorHelper();
+        $paginate = $paginatorHelper->paginateModel($model);
+
+        return [
+            'model' => $model->all(),
+            'paginate' => $paginate
+        ];
+    }
+
+    public function getAllPaginateToIndexHome($pages, $filterText)
+    {
+        $model = User::select('users.id', 'users.name')
+            ->where('users.state', true)
+            ->orderBy('users.name')
+            ->filtersToIndexHome($filterText)
             ->paginate($pages);
 
         $paginatorHelper = new PaginatorHelper();

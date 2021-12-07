@@ -22,7 +22,7 @@ class UserController
 
     public function jsonIndex($filterText = '')
     {
-        return response()->json($this->userService->getAllPaginateToIndex($filterText));
+        return response()->json($this->userService->getAllPaginateToIndexUser($filterText));
     }
 
     public function jsonCreate()
