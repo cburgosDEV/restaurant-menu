@@ -45,5 +45,6 @@ Route::group(['middleware'=>['auth']], function ()
         Route::post('store', ['App\Http\Controllers\RestaurantController', 'store']);
         Route::get('update/{id}', ['App\Http\Controllers\RestaurantController', 'update']);
         Route::get('jsonUpdate/{id}', ['App\Http\Controllers\RestaurantController', 'jsonUpdate']);
+        Route::post('softDelete', ['App\Http\Controllers\RestaurantController', 'softDelete']);
     });
 });

@@ -7,7 +7,7 @@ var vue = new Vue({
   el: '#create',
   components: {},
   data: {
-    url: $('#baseUrl').val() + 'restaurant',
+    url: $('#baseUrl').val(),
     viewModel: {},
     validations: {},
     showError: false
@@ -38,7 +38,7 @@ var vue = new Vue({
       var _this = this;
 
       loading(true);
-      var url = this.url + "/jsonCreate";
+      var url = this.url + "restaurant/jsonCreate";
       window.axios.get(url).then(function (response) {
         _this.switchResponseServer("initForm", response.data);
       })["catch"](function (error) {})["finally"](function (response) {
@@ -49,7 +49,7 @@ var vue = new Vue({
       var _this2 = this;
 
       loading(true);
-      var url = this.url + "/store";
+      var url = this.url + "restaurant/store";
       window.axios.post(url, this.viewModel).then(function (response) {
         _this2.switchResponseServer("store", response.data);
       })["catch"](function (error) {

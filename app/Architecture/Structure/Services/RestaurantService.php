@@ -91,15 +91,15 @@ class RestaurantService
             $model->fill($request->all());
             $response = $this->restaurantRepository->store($model);
 
-            if(count($listImage)>0){
+            if($listImage != null && count($listImage)>0){
                 //SAVE IMAGE
                 $this->saveImage($listImage, $request->get('id'));
             }
-            if(count($listCategory)>0){
+            if($listCategory != null && count($listCategory)>0){
                 //SAVE CATEGORY
                 $this->saveCategory($listCategory, $response->id);
             }
-            if(count($listCategoryDelete)>0){
+            if($listCategoryDelete != null && count($listCategoryDelete)>0){
                 //DELETE CATEGORY
                 $this->deleteCategory($listCategoryDelete, $response->id);
             }
@@ -133,6 +133,13 @@ class RestaurantService
             }
             return $response;
         }
+    }
+
+    public function softDelete($request)
+    {
+        $model = $this->restaurantRepository->getById($request->get('id'));
+        $model->fill($request->all());
+        return $this->restaurantRepository->store($model);
     }
 
     public function saveImage($listImage, $idRestaurant)

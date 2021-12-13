@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Architecture\Enums\CategoryTypeEnum;
+use App\Architecture\Structure\Services\DropdownService;
 use App\Architecture\Structure\Services\RestaurantService;
 use App\Http\Request\StoreRestaurant;
 
 class RestaurantController extends Controller
 {
     protected $restaurantService;
+    protected $dropdownService;
 
-    public function __construct(RestaurantService $restaurantService)
+    public function __construct
+    (
+        RestaurantService $restaurantService,
+        DropdownService $dropdownService
+    )
     {
         $this->restaurantService = $restaurantService;
+        $this->dropdownService = $dropdownService;
     }
 
     public function index()
@@ -29,12 +37,6 @@ class RestaurantController extends Controller
         return response()->json($this->restaurantService->getById(0));
     }
 
-    public function store(StoreRestaurant $request)
-    {
-        $request->validated();
-        return response()->json($this->restaurantService->store($request));
-    }
-
     public function update($id)
     {
         return view('project_views.restaurant.update', compact('id'));
@@ -42,6 +44,23 @@ class RestaurantController extends Controller
 
     public function jsonUpdate($id)
     {
-        return response()->json($this->restaurantService->getById($id));
+        return response()->json(
+            [
+                'viewModel' => $this->restaurantService->getById($id),
+                'restaurantCategoryDropdown' => $this->dropdownService->CategoryDropdown(CategoryTypeEnum::$RESTAURANT_DISCRIMINATOR)
+            ]
+        );
+    }
+
+    public function store(StoreRestaurant $request)
+    {
+        $request->validated();
+        return response()->json($this->restaurantService->store($request));
+    }
+
+    public function softDelete(StoreRestaurant $request)
+    {
+        $request->validated();
+        return response()->json($this->restaurantService->softDelete($request));
     }
 }

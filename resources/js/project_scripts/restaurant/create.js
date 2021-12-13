@@ -4,7 +4,7 @@ let vue = new Vue({
 
     },
     data: {
-        url: $('#baseUrl').val() + 'restaurant',
+        url: $('#baseUrl').val(),
         viewModel : {},
         validations : {},
         showError: false,
@@ -33,7 +33,7 @@ let vue = new Vue({
         },
         initForm: function(){
             loading(true);
-            let url = this.url + "/jsonCreate";
+            let url = this.url + "restaurant/jsonCreate";
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("initForm", response.data);
             }).catch((error) => {
@@ -44,7 +44,7 @@ let vue = new Vue({
         },
         save: function () {
             loading(true);
-            let url = this.url + "/store";
+            let url = this.url + "restaurant/store";
             window.axios.post(url, this.viewModel).then((response) => {
                 this.switchResponseServer("store", response.data);
             }).catch((error) => {
