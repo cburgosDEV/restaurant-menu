@@ -38,6 +38,12 @@
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{url('/user')}}">Usuarios</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{url('/category', $discriminator = 'RESTAURANT')}}">Categorías (Restaurantes)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{url('/category', $discriminator = 'PLATE')}}">Categorías (Platos)</a>
+                    </li>
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ms-auto">

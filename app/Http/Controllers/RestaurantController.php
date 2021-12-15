@@ -6,6 +6,7 @@ use App\Architecture\Enums\CategoryTypeEnum;
 use App\Architecture\Structure\Services\DropdownService;
 use App\Architecture\Structure\Services\RestaurantService;
 use App\Http\Request\StoreRestaurant;
+use Illuminate\Support\Facades\Auth;
 
 class RestaurantController extends Controller
 {
@@ -39,6 +40,9 @@ class RestaurantController extends Controller
 
     public function update($id)
     {
+        $restaurant = $this->restaurantService->getById($id);
+        if($restaurant == null || $restaurant['idUser'] != Auth::id()) return redirect('homeUser');
+
         return view('project_views.restaurant.update', compact('id'));
     }
 

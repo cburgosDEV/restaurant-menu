@@ -12,6 +12,7 @@ class CategoryRepository
         return $emptyModel = [
             'id' => 0,
             'name' => '',
+            'discriminator' => '',
             'state' => true,
         ];
     }
@@ -39,7 +40,6 @@ class CategoryRepository
             ->where('category.discriminator', $discriminator)
             ->filtersToIndex($filterText)
             ->paginate($pages);
-
         $paginatorHelper = new PaginatorHelper();
         $paginate = $paginatorHelper->paginateModel($model);
 

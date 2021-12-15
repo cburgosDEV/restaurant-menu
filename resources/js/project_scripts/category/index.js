@@ -1,14 +1,13 @@
-import VueUploadMultipleImage from 'vue-upload-multiple-image';
-
 let vue = new Vue({
     el: '#index',
     components: {
-        VueUploadMultipleImage
+
     },
     data: {
-        url: $('#baseUrl').val() + 'user',
+        url: $('#baseUrl').val() + 'category',
+        discriminator: $('#discriminator').val(),
         filterText: '',
-        users: [],
+        categories: [],
         paginate: {},
         viewModel: {},
         validations : {},
@@ -16,17 +15,6 @@ let vue = new Vue({
         modalTitle: '',
         buttonModalTitle: '',
         isEditForm: false,
-        //IMAGE
-        image: [],
-        imagePath: [],
-        showEdit: false,
-        isMultiple: false,
-        //PASSWORD
-        idUser: 0,
-        password: '',
-        rePassword: '',
-        showErrorsChangePassword: false,
-        validationsChangePassword: {},
     },
     computed: {
 
@@ -38,7 +26,7 @@ let vue = new Vue({
         switchResponseServer: function (switchAction, response){
             switch (switchAction){
                 case 'initList':
-                    this.users = response.model;
+                    this.categories = response.model;
                     this.paginate = response.paginate;
                     break;
                 case 'jsonCreate':
@@ -48,7 +36,7 @@ let vue = new Vue({
                     if(response){
                         showToast('success', 'Operación realizada correctamente');
                         this.initList();
-                        $('#UserModal').modal('hide');
+                        $('#CategoryModal').modal('hide');
                     } else {
                         showToast('error', 'Ocurrió un error al guardar el registro');
                     }
@@ -60,7 +48,7 @@ let vue = new Vue({
         },
         initList: function(page = 1){
             loading(true);
-            let url = this.url + "/jsonIndex/" + this.filterText + '?page=' + page;
+            let url = this.url + "/jsonIndex/" + this.discriminator + '/' + this.filterText + '?page=' + page;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("initList", response.data);
             }).catch((error) => {
@@ -73,24 +61,24 @@ let vue = new Vue({
             this.filterText = filterText;
             this.initList();
         },
-        showModal: function (idUser = 0) {
+        showModal: function (idCategory = 0) {
             this.clearData();
-            if (idUser === 0){
-                this.modalTitle = 'Crear nuevo usuario'
+            if (idCategory === 0){
+                this.modalTitle = 'Crear nueva categoría'
                 this.buttonModalTitle = 'Guardar';
                 this.initFormCreate();
             } else {
                 this.modalTitle = 'Detalle'
                 this.buttonModalTitle = 'Actualizar';
                 this.isEditForm = true;
-                this.initFormDetail(idUser);
+                this.initFormDetail(idCategory);
 
             }
-            $('#UserModal').modal('show');
+            $('#CategoryModal').modal('show');
         },
         initFormCreate: function (){
             loading(true);
-            let url = this.url + "/jsonCreate";
+            let url = this.url + "/jsonCreate/" + this.discriminator;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("jsonCreate", response.data);
             }).catch((error) => {
@@ -99,15 +87,14 @@ let vue = new Vue({
                 loading(false);
             });
         },
-        initFormDetail: function (idUser, callback){
+        initFormDetail: function (idCategory, callback){
             loading(true);
-            let url = this.url + "/jsonDetail/" + idUser;
+            let url = this.url + "/jsonDetail/" + idCategory;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("jsonDetail", response.data);
             }).catch((error) => {
 
             }).finally((response) => {
-                this.setImageToShow(this.viewModel.avatar);
                 loading(false);
                 if(callback){
                     callback();
@@ -116,7 +103,6 @@ let vue = new Vue({
         },
         save: function () {
             let url = this.url + "/store";
-            if(this.imagePath.length>0)this.viewModel.image = this.imagePath[0].path;
             loading(true);
             window.axios.post(url, this.viewModel).then((response) => {
                 this.switchResponseServer("store", response.data);
@@ -130,13 +116,13 @@ let vue = new Vue({
                 loading(false);
             });
         },
-        softDelete: function (idUser) {
+        softDelete: function (idCategory) {
             this.$swal({
                 icon: 'warning',
             }).then((result) => {
                 if(result.value) {
                     let context = this;
-                    this.initFormDetail(idUser, function (){
+                    this.initFormDetail(idCategory, function (){
                         context.viewModel.state = false;
                         context.save();
                     });
@@ -148,74 +134,11 @@ let vue = new Vue({
             this.showError = false;
             this.validations = {};
             this.viewModel = {};
-            this.modalTitle = '';
-            this.buttonModalTitle = '';
+            this.modalTile = '';
+            this.buttonModalTile = '';
             this.image = [];
             this.imagePath = [];
         },
-        uploadImageSuccess(formData, index, fileList) {
-            this.imagePath = fileList;
-        },
-        beforeRemove (index, done, fileList) {
-            let r = true;
-            if (r) {
-                this.viewModel.isImageDeleted = true;
-                done();
-            }
-        },
-        setImageToShow: function (image){
-            this.image.push(
-                {
-                    path: 'storage/'+image,
-                    default: 1,
-                    highlight: 1,
-                    caption: 'Profile'
-                }
-            );
-        },
-        showModalChangePassword: function (idUser) {
-            this.clearDataChangePassword();
-            this.idUser = idUser;
-            $('#UserPasswordModal').modal('show');
-        },
-        changePassword: function () {
-            let url = this.url + "/changePassword";
-            let data = {
-                id: this.idUser,
-                password: this.password,
-                rePassword: this.rePassword,
-            };
-            this.$swal({
-                confirmButtonText: 'Si, cambiar contraseña',
-                icon: 'warning',
-            }).then((result) => {
-                if(result.value) {
-                    loading(true);
-                    window.axios.post(url, data).then((response) => {
-                        if (response.data) {
-                            showToast('success', 'Operación realizada correctamente');
-                            this.clearDataChangePassword();
-                            $('#UserPasswordModal').modal('hide');
-                        }
-                    }).catch((error) => {
-                        if(error.response.status === 422){
-                            this.showErrorsChangePassword = true;
-                            this.validationsChangePassword = error.response.data.errors;
-                            showToast("warning", "Revisar los datos ingresados");
-                        }
-                    }).finally((response) => {
-                        loading(false);
-                    });
-                }
-            });
-        },
-        clearDataChangePassword: function (){
-            this.idUser = 0;
-            this.password = '';
-            this.rePassword = '';
-            this.showErrorsChangePassword = false;
-            this.validationsChangePassword = {};
-        }
     },
 });
 

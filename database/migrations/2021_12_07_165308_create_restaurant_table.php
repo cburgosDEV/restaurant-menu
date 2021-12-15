@@ -17,7 +17,6 @@ class CreateRestaurantTable extends Migration
             $table->string('phone2', '20')->nullable();
             $table->string('email', '100')->nullable();
             $table->string('web', '100')->nullable();
-
             $table->boolean('state')->default(true);
 
             //Relations

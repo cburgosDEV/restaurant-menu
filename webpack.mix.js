@@ -17,3 +17,6 @@ mix.js('resources/js/project_scripts/user/index.js', 'public/js/user');
 mix.js('resources/js/project_scripts/restaurant/index.js', 'public/js/restaurant');
 mix.js('resources/js/project_scripts/restaurant/create.js', 'public/js/restaurant');
 mix.js('resources/js/project_scripts/restaurant/update.js', 'public/js/restaurant');
+
+//CATEGORY
+mix.js('resources/js/project_scripts/category/index.js', 'public/js/category');

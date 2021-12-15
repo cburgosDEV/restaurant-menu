@@ -47432,7 +47432,7 @@ var vue = new Vue({
         this.buttonModalTitle = 'Guardar';
         this.initFormCreate();
       } else {
-        this.modalTile = 'Detalle';
+        this.modalTitle = 'Detalle';
         this.buttonModalTitle = 'Actualizar';
         this.isEditForm = true;
         this.initFormDetail(idUser);
@@ -47508,8 +47508,8 @@ var vue = new Vue({
       this.showError = false;
       this.validations = {};
       this.viewModel = {};
-      this.modalTile = '';
-      this.buttonModalTile = '';
+      this.modalTitle = '';
+      this.buttonModalTitle = '';
       this.image = [];
       this.imagePath = [];
     },

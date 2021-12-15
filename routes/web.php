@@ -47,4 +47,13 @@ Route::group(['middleware'=>['auth']], function ()
         Route::get('jsonUpdate/{id}', ['App\Http\Controllers\RestaurantController', 'jsonUpdate']);
         Route::post('softDelete', ['App\Http\Controllers\RestaurantController', 'softDelete']);
     });
+
+    //CATEGORY
+    Route::prefix('category')->middleware('role:super')->group(function () {
+        Route::get('{discriminator?}', ['App\Http\Controllers\CategoryController', 'index']);
+        Route::get('jsonIndex/{discriminator}/{filterText?}', ['App\Http\Controllers\CategoryController', 'jsonIndex']);
+        Route::get('jsonCreate/{discriminator?}', ['App\Http\Controllers\CategoryController', 'jsonCreate']);
+        Route::post('store', ['App\Http\Controllers\CategoryController', 'store']);
+        Route::get('jsonDetail/{id}', ['App\Http\Controllers\CategoryController', 'jsonDetail']);
+    });
 });
