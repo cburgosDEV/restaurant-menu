@@ -31,7 +31,7 @@ class Restaurant extends Model
         return $this->hasMany('App\Models\RestaurantCategory', 'idRestaurant');
     }
 
-    public function scopeFiltersToIndexRestaurant($query, $filters)
+    public function scopeFiltersToIndex($query, $filters)
     {
         $query->where('restaurant.name', 'like', '%' . $filters . '%');
     }

@@ -23,6 +23,7 @@
                                 <td>@{{ item.name }}</td>
                                 <td>
                                     <a :href="'{{'restaurant/update'}}' + '/' + item.id" class="btn btn-outline-success btn-sm"><i class="fa fa-eye"></i> Ver</a>
+                                    <a :href="'{{'plate'}}' + '/' + item.id" class="btn btn-outline-secondary btn-sm"><i class="fa fa-list"></i> Platos</a>
                                 </td>
                             </tr>
                             </tbody>
@@ -35,8 +36,8 @@
                     </div>
                     <div v-else>
                         <div class="alert alert-danger" role="alert">
-                            *No tiene restaurantes registrados
-                            <a href="{{'restaurant/create'}}" class="link-secondary">Click aquí para registrar uno.</a>
+                            *No tiene restaurantes registrados, crear uno para continuar.
+                            <a href="{{'restaurant/create'}}" class="link-secondary">Click aquí para crear uno.</a>
                         </div>
                     </div>
                 </custom-card>

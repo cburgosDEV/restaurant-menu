@@ -40,7 +40,7 @@ class UserRepository
         }
     }
 
-    public function getAllPaginateToIndexUser($pages, $filterText)
+    public function getAllPaginateToIndex($pages, $filterText)
     {
         $model = User::select('users.*')
             ->where('users.state', true)

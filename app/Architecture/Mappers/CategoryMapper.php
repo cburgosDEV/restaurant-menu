@@ -21,6 +21,7 @@ class CategoryMapper
         $model->name = $object['name'];
         $model->discriminator = $object['discriminator'];
         $model->state = $object['state'];
+        $model->idRestaurant = $object['idRestaurant'];
 
         return $model;
     }

@@ -71,7 +71,7 @@ class RestaurantRepository
             ->where('restaurant.state', true)
             ->where('restaurant.idUser', $idUser)
             ->orderBy('restaurant.name')
-            ->filtersToIndexRestaurant($filterText)
+            ->filtersToIndex($filterText)
             ->paginate($pages);
 
         $paginatorHelper = new PaginatorHelper();

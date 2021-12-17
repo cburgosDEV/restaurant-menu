@@ -56,4 +56,18 @@ Route::group(['middleware'=>['auth']], function ()
         Route::post('store', ['App\Http\Controllers\CategoryController', 'store']);
         Route::get('jsonDetail/{id}', ['App\Http\Controllers\CategoryController', 'jsonDetail']);
     });
+
+    //PLATE
+    Route::prefix('plate')->middleware('role:admin')->group(function () {
+        Route::get('{id}', ['App\Http\Controllers\PlateController', 'index']);
+        Route::get('jsonIndex/{id}/{filterText?}', ['App\Http\Controllers\PlateController', 'jsonIndex']);
+        Route::get('jsonIndexPlate/{id}/{filterText?}', ['App\Http\Controllers\PlateController', 'jsonIndexPlate']);
+        Route::get('jsonCreate', ['App\Http\Controllers\PlateController', 'jsonCreate']);
+        Route::post('store', ['App\Http\Controllers\PlateController', 'store']);
+        Route::get('jsonDetail/{id}', ['App\Http\Controllers\PlateController', 'jsonDetail']);
+
+        Route::get('jsonCreateCategory/{discriminator?}', ['App\Http\Controllers\CategoryController', 'jsonCreate']);
+        Route::post('storeCategory', ['App\Http\Controllers\CategoryController', 'store']);
+        Route::get('jsonDetailCategory/{id}', ['App\Http\Controllers\CategoryController', 'jsonDetail']);
+    });
 });

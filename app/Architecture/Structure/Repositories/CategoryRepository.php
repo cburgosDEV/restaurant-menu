@@ -2,6 +2,7 @@
 
 namespace App\Architecture\Structure\Repositories;
 
+use App\Architecture\Enums\CategoryTypeEnum;
 use App\Architecture\Helpers\PaginatorHelper;
 use App\Models\Category;
 
@@ -14,6 +15,7 @@ class CategoryRepository
             'name' => '',
             'discriminator' => '',
             'state' => true,
+            'idRestaurant' => null,
         ];
     }
 
@@ -31,6 +33,25 @@ class CategoryRepository
         } else {
             return $category->update();
         }
+    }
+
+    public function getAllByDiscriminator($filterText, $discriminator)
+    {
+        return Category::select('category.*')
+            ->where('category.state', true)
+            ->where('category.discriminator', $discriminator)
+            ->filtersToIndex($filterText)
+            ->get();
+    }
+
+    public function getAllByRestaurant($filterText, $idRestaurant)
+    {
+        return Category::select('category.*')
+            ->where('category.state', true)
+            ->where('category.idRestaurant', $idRestaurant)
+            ->where('category.discriminator', CategoryTypeEnum::$PLATE_DISCRIMINATOR)
+            ->filtersToIndex($filterText)
+            ->get();
     }
 
     public function getAllByDiscriminatorPaginateToIndex($pages, $filterText, $discriminator)

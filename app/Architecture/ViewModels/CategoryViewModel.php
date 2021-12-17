@@ -10,6 +10,7 @@ class CategoryViewModel
     protected $name;
     protected $discriminator;
     protected $state;
+    protected $idRestaurant;
 
     public function __construct()
     {
@@ -22,6 +23,7 @@ class CategoryViewModel
         $this->name = $model->name;
         $this->discriminator = $model->discriminator;
         $this->state = $model->state;
+        $this->idRestaurant = $model->idRestaurant;
 
         return $this;
     }

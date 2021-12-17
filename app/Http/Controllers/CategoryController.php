@@ -23,7 +23,7 @@ class CategoryController
         return view('project_views.category.index', compact('discriminator'));
     }
 
-    public function jsonIndex( $discriminator, $filterText = '')
+    public function jsonIndex($discriminator, $filterText = '')
     {
         return response()->json($this->categoryService->getAllByDiscriminatorPaginateToIndex($filterText, $discriminator));
     }

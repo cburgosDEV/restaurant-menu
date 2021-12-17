@@ -7,5 +7,6 @@
     "/js/restaurant/create.js": "/js/restaurant/create.js",
     "/js/restaurant/update.js": "/js/restaurant/update.js",
     "/js/category/index.js": "/js/category/index.js",
+    "/js/plate/index.js": "/js/plate/index.js",
     "/css/app.css": "/css/app.css"
 }

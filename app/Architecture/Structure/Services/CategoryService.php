@@ -26,6 +26,16 @@ class CategoryService
         return $this->categoryRepository->getById($id);
     }
 
+    public function getAllByDiscriminator($filterText, $discriminator)
+    {
+        return  $this->categoryRepository->getAllByDiscriminator($filterText, $discriminator);
+    }
+
+    public function getAllByRestaurant($filterText, $idRestaurant)
+    {
+        return  $this->categoryRepository->getAllByRestaurant($filterText, $idRestaurant);
+    }
+
     public function getAllByDiscriminatorPaginateToIndex($filterText, $discriminator)
     {
         return  $this->categoryRepository->getAllByDiscriminatorPaginateToIndex(10, $filterText, $discriminator);

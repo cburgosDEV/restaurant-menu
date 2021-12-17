@@ -4,20 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Plate extends Model
 {
-    protected $table = 'category';
+    protected $table = 'plate';
     protected $primaryKey = 'id';
     protected $fillable = [
         'id',
         'name',
-        'discriminator',
+        'description',
+        'price',
         'state',
-        'idRestaurant',
+        'image',
+        'idCategory',
     ];
 
     public function scopeFiltersToIndex($query, $filters)
     {
-        $query->where('category.name', 'like', '%' . $filters . '%');
+        $query->where('plate.name', 'like', '%' . $filters . '%');
     }
 }
