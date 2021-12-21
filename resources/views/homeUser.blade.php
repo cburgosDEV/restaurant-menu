@@ -2,11 +2,17 @@
 
 @section('content')
     <div class="container" id="index">
+        <input type="hidden" id="idUser" name="idUser" value="{{$idUser}}">
         <div v-if="isLoaded" class="row justify-content-center">
             <div class="col-md-8">
                 <custom-card
-                    card-title="Mis Restaurantes">
-                    <div v-if="restaurants.length>0">
+                    @role("super") card-title="Usuario ({{$userName}})"
+                    @else card-title="Mis Restaurantes"
+                    @endrole
+                button-title="Crear"
+                button-icon="plus"
+                @button-action="createRestaurant">
+                    <div v-if="restaurants.length > 0">
                         <h6 class="font-weight-light"><i class="fa fa-list"></i> Lista de restaurantes</h6>
                         <search-bar @search="search"></search-bar>
                         <table class="table table-bordered table-hover">
@@ -22,8 +28,8 @@
                                 <th>@{{ index + 1 }}.</th>
                                 <td>@{{ item.name }}</td>
                                 <td>
-                                    <a :href="'{{'restaurant/update'}}' + '/' + item.id" class="btn btn-outline-success btn-sm"><i class="fa fa-eye"></i> Ver</a>
-                                    <a :href="'{{'plate'}}' + '/' + item.id" class="btn btn-outline-secondary btn-sm"><i class="fa fa-list"></i> Platos</a>
+                                    <a :href="'{{'../restaurant/update'}}' + '/' + item.id" class="btn btn-outline-success btn-sm"><i class="fa fa-eye"></i> Ver</a>
+                                    <a :href="'{{'../plate'}}' + '/' + item.id" class="btn btn-outline-secondary btn-sm"><i class="fa fa-list"></i> Platos</a>
                                 </td>
                             </tr>
                             </tbody>

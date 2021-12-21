@@ -28,9 +28,10 @@ class RestaurantController extends Controller
         return view('project_views.restaurant.index');
     }
 
-    public function create()
+    public function create($idUser = 0)
     {
-        return view('project_views.restaurant.create');
+        if($idUser != 0 && Auth::user()->hasRole('admin')) return redirect('homeUser');
+        return view('project_views.restaurant.create', compact('idUser'));
     }
 
     public function jsonCreate()
@@ -41,7 +42,7 @@ class RestaurantController extends Controller
     public function update($id)
     {
         $restaurant = $this->restaurantService->getById($id);
-        if($restaurant == null || $restaurant['idUser'] != Auth::id()) return redirect('homeUser');
+        if(Auth::user()->hasRole('admin') && ($restaurant == null || $restaurant['idUser'] != Auth::id())) return redirect('homeUser');
 
         return view('project_views.restaurant.update', compact('id'));
     }
@@ -59,7 +60,8 @@ class RestaurantController extends Controller
     public function store(StoreRestaurant $request)
     {
         $request->validated();
-        return response()->json($this->restaurantService->store($request));
+        if(Auth::user()->hasRole('admin')) return response()->json($this->restaurantService->store($request, Auth::id()));
+        else return response()->json($this->restaurantService->store($request, $request->get('idUser')));
     }
 
     public function softDelete(StoreRestaurant $request)

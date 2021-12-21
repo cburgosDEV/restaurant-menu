@@ -7,7 +7,8 @@ var vue = new Vue({
   el: '#index',
   components: {},
   data: {
-    url: $('#baseUrl').val() + 'homeUser',
+    url: $('#baseUrl').val(),
+    idUser: $('#idUser').val(),
     filterText: '',
     restaurants: [],
     paginate: {},
@@ -32,7 +33,7 @@ var vue = new Vue({
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       loading(true);
-      var url = this.url + "/jsonIndex/" + this.filterText + '?page=' + page;
+      var url = this.url + "homeUser/jsonIndex/" + this.idUser + '/' + this.filterText + '?page=' + page;
       window.axios.get(url).then(function (response) {
         _this.switchResponseServer("initList", response.data);
       })["catch"](function (error) {})["finally"](function (response) {
@@ -42,6 +43,9 @@ var vue = new Vue({
     search: function search(filterText) {
       this.filterText = filterText;
       this.initList();
+    },
+    createRestaurant: function createRestaurant() {
+      window.location.href = this.url + 'restaurant/create/' + this.idUser;
     }
   }
 });

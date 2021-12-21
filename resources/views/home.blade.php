@@ -13,6 +13,7 @@
                     <tr>
                         <th>#</th>
                         <th>Nombre del usuario</th>
+                        <th>Restaurantes</th>
                         <th>Opciones</th>
                     </tr>
                     </thead>
@@ -20,8 +21,9 @@
                     <tr v-for="(user, index) in users">
                         <th>@{{ index + 1 }}.</th>
                         <td>@{{ user.name }}</td>
+                        <td>@{{ user.restaurants.length }}</td>
                         <td>
-
+                            <a :href="'{{'homeUser'}}'+  '/' + user.id" class="btn btn-outline-success btn-sm"><i class="fa fa-list"></i> Restaurantes</a>
                         </td>
                     </tr>
                     </tbody>

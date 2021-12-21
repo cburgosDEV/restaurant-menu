@@ -16,9 +16,9 @@ class StorePlate extends FormRequest
         if($this->method() == 'POST')
         {
             return [
-                'name' => 'required|max:100',
-                'description' => 'required|max:1000',
-                'price' => 'required',
+                'name' => 'required|max:500',
+                'description' => 'max:1000',
+                'price' => 'required|gt:0',
             ];
         }
     }
@@ -31,6 +31,7 @@ class StorePlate extends FormRequest
             'description.required' => '*Este campo es obligatorio.',
             'description.max' => '*Este campo no debe exceder los :max caracteres.',
             'price.required' => '*Este campo es obligatorio.',
+            'price.gt' => '*Ingresar un precio mayor a 0.',
         ];
 
         return $messagesES;

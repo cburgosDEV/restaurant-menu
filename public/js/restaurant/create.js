@@ -8,6 +8,7 @@ var vue = new Vue({
   components: {},
   data: {
     url: $('#baseUrl').val(),
+    idUser: $('#idUser').val(),
     viewModel: {},
     validations: {},
     showError: false
@@ -26,7 +27,7 @@ var vue = new Vue({
         case 'store':
           if (response.id > 0) {
             showToast('success', 'Operación realizada correctamente');
-            window.location.href = this.url + '/update/' + response.id;
+            window.location.href = this.url + 'restaurant/update/' + response.id;
           } else {
             showToast('error', 'Ocurrió un error al guardar el registro');
           }
@@ -49,6 +50,7 @@ var vue = new Vue({
       var _this2 = this;
 
       loading(true);
+      this.viewModel.idUser = this.idUser;
       var url = this.url + "restaurant/store";
       window.axios.post(url, this.viewModel).then(function (response) {
         _this2.switchResponseServer("store", response.data);

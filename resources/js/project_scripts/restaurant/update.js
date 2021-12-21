@@ -44,7 +44,7 @@ let vue = new Vue({
                 case 'store':
                     if(response){
                         showToast('success', 'Operación realizada correctamente');
-                        window.location.href = this.url;
+                        window.location.href = this.url + 'homeUser/' + this.viewModel.idUser;
                     } else {
                         showToast('error', 'Ocurrió un error al guardar el registro');
                     }

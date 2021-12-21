@@ -3,24 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Architecture\Structure\Services\RestaurantService;
+use App\Architecture\Structure\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 class HomeUserController extends Controller
 {
     protected $restaurantService;
+    protected $userService;
 
-    public function __construct(RestaurantService $restaurantService)
+    public function __construct(RestaurantService $restaurantService, UserService $userService)
     {
         $this->restaurantService = $restaurantService;
+        $this->userService = $userService;
     }
 
-    public function index()
+    public function index($idUser = 0)
     {
-        return view('homeUser');
+        if($idUser == 0 && Auth::user()->hasRole('super')) return redirect('');
+        if($idUser != 0 && Auth::user()->hasRole('admin')) return redirect('homeUser');
+
+        $userName = '';
+        if($idUser != 0) $userName = $this->userService->getById($idUser)->name;
+        return view('homeUser', compact('idUser', 'userName'));
     }
 
-    public function jsonIndex($filterText = '')
+    public function jsonIndex($idUser = 0, $filterText = '')
     {
-        return response()->json($this->restaurantService->getAllByUserPaginateToIndex($filterText, Auth::id()));
+        if(Auth::user()->hasRole('super')) return response()->json($this->restaurantService->getAllByUserPaginateToIndex($filterText, $idUser));
+        else return response()->json($this->restaurantService->getAllByUserPaginateToIndex($filterText, Auth::id()));
     }
 }

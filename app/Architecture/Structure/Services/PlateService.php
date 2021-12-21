@@ -38,38 +38,40 @@ class PlateService
         return $this->plateRepository->getAllPaginateToIndex(10, $filterText);
     }
 
+    public function getAllByCategory($filterText, $idCategory)
+    {
+        return $this->plateRepository->getAllByCategory($filterText, $idCategory);
+    }
+
     public function getAllByCategoryPaginateToIndex($filterText, $idCategory)
     {
-        return $this->plateRepository->getAllByCategoryPaginateToIndex(10, $filterText, $idCategory);
+        return $this->plateRepository->getAllByCategoryPaginateToIndex(0, $filterText, $idCategory);
     }
 
     public function store($request)
     {
         if($request->get('id') == 0) {
             $model = $this->plateMapper->objectRequestToModel($request->all());
-            $model->assignRole(Role::findByName($request->get('role')));
-
-            return $this->plateRepository->store($model);
         }
         else {
             $model = $this->plateRepository->getById($request->get('id'));
             $model->fill($request->all());
 
             //DELETE IMAGE
-            if($request->get('isImageDeleted') && $request->get('avatar')!='avatar.png'){
+            if($request->get('isImageDeleted') && $request->get('avatar')!='no-image.png'){
                 Storage::disk('public')->delete($model['avatar']);
-                $model['avatar'] = 'avatar.png';
+                $model['avatar'] = 'no-image.png';
             }
-
-            //SAVE IMAGE
-            if($request->get('image')!=null){
-                $image = $request->get('image');
-                $responseImage = $this->storeImageHelper->storageImage($image, "plates/");
-                if($responseImage[0]) $model['avatar'] = $responseImage[1];
-            }
-
-            return $this->plateRepository->store($model);
         }
+        //SAVE IMAGE
+        if($request->get('image')!=null){
+            $image = $request->get('image');
+            $responseImage = $this->storeImageHelper->storageImage($image, "restaurants/{$request->get('idRestaurant')}/plates/");
+            if($responseImage[0]) $model['avatar'] = $responseImage[1];
+        }
+
+        return $this->plateRepository->store($model);
+
     }
 
     public function softDelete($request)

@@ -9,7 +9,6 @@ use App\Architecture\Mappers\RestaurantMapper;
 use App\Architecture\Structure\Repositories\RestaurantCategoryRepository;
 use App\Architecture\Structure\Repositories\RestaurantImageRepository;
 use App\Architecture\Structure\Repositories\RestaurantRepository;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class RestaurantService
@@ -58,7 +57,7 @@ class RestaurantService
         return  $this->restaurantRepository->getAllByUserPaginateToIndex(10, $filterText, $idUser);
     }
 
-    public function store($request)
+    public function store($request, $idUser)
     {
         $listImage = $request->get('listImage');
         $listCategory = $request->get('listCategory');
@@ -68,7 +67,7 @@ class RestaurantService
         if($request->get('id') == 0) {
             //CREATE RESTAURANT
             $model = $this->restaurantMapper->objectRequestToModel($request->all());
-            $model->idUser = Auth::id();
+            $model->idUser = $idUser;
             $response = $this->restaurantRepository->store($model);
             if(!is_numeric($response->id)) return $response;
             if($listImage != null && count($listImage)>0){
@@ -155,7 +154,7 @@ class RestaurantService
             $restaurantImage = $this->restaurantImageRepository->getById($image['id']);
             if($restaurantImage==null){
                 $restaurantImage = $this->restaurantImageRepository->buildEmptyModel();
-                $responseImage = $this->storeImageHelper->storageImage($image['file'], "restaurants/");
+                $responseImage = $this->storeImageHelper->storageImage($image['file'], "restaurants/$idRestaurant/");
                 if($responseImage[0]) {
                     $restaurantImage['url'] = $responseImage[1];
                     $restaurantImage['isPrincipal'] = $image['highlight'] == 1 ?? false;
@@ -186,20 +185,6 @@ class RestaurantService
         $this->restaurantImageRepository->store($restaurantImage);
 
         Storage::disk('public')->delete($restaurantImage['url']);
-    }
-
-    public function storageImage($img)
-    {
-        $folderPath = "restaurants/";
-        $image_parts = explode(";base64,", $img);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        $image_base64 = base64_decode($image_parts[1]);
-        $file = $folderPath . uniqid() . '.'.$image_type;
-
-        $response = Storage::disk('public')->put($file, $image_base64);
-
-        return [$response, $file];
     }
 
     public function saveCategory($listCategory, $idRestaurant)

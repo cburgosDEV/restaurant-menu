@@ -22,7 +22,7 @@ class PlateMapper
         $model->description = $object['description'];
         $model->price = $object['price'];
         $model->state = $object['state'];
-        $model->image = $object['image'];
+        $model->avatar = $object['avatar'];
         $model->idCategory = $object['idCategory'];
 
         return $model;

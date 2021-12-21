@@ -14,9 +14,11 @@ class PlateRepository
             'name' => '',
             'description' => '',
             'price' => '',
-            'state' => '',
+            'state' => true,
+            'avatar' => '',
             'image' => '',
-            'idCategory' => '',
+            'idCategory' => 0,
+            'isImageDeleted' => false,
         ];
     }
 
@@ -52,6 +54,16 @@ class PlateRepository
             'model' => $model->all(),
             'paginate' => $paginate
         ];
+    }
+
+    public function getAllByCategory($filterText, $idCategory)
+    {
+        return Plate::select('plate.*')
+            ->where('plate.state', true)
+            ->where('plate.idCategory', $idCategory)
+            ->orderBy('plate.name')
+            ->filtersToIndex($filterText)
+            ->get();
     }
 
     public function getAllByCategoryPaginateToIndex($pages, $filterText, $idCategory)

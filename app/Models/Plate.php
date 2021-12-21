@@ -14,7 +14,7 @@ class Plate extends Model
         'description',
         'price',
         'state',
-        'image',
+        'avatar',
         'idCategory',
     ];
 

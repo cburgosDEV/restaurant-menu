@@ -48,8 +48,6 @@ class UserService
         if($request->get('id') == 0) {
             $model = $this->userMapper->objectRequestToModel($request->all());
             $model->assignRole(Role::findByName($request->get('role')));
-
-            return $this->userRepository->store($model);
         }
         else {
             $model = $this->userRepository->getById($request->get('id'));
@@ -66,16 +64,15 @@ class UserService
                 Storage::disk('public')->delete($model['avatar']);
                 $model['avatar'] = 'avatar.png';
             }
-
-            //SAVE IMAGE
-            if($request->get('image')!=null){
-                $image = $request->get('image');
-                $responseImage = $this->storeImageHelper->storageImage($image, "users/");
-                if($responseImage[0]) $model['avatar'] = $responseImage[1];
-            }
-
-            return $this->userRepository->store($model);
         }
+        //SAVE IMAGE
+        if($request->get('image')!=null){
+            $image = $request->get('image');
+            $responseImage = $this->storeImageHelper->storageImage($image, "users/");
+            if($responseImage[0]) $model['avatar'] = $responseImage[1];
+        }
+
+        return $this->userRepository->store($model);
     }
 
     public function changePassword($request)

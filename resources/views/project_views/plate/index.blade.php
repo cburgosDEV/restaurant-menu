@@ -2,8 +2,13 @@
 
 @section('content')
     <div id="index" class="container">
-        <input type="hidden" name="idRestaurant" id="idRestaurant" value="{{$id}}">
+        <input type="hidden" name="idRestaurant" id="idRestaurant" value="{{$idRestaurant}}">
         <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-primary" role="alert">
+                    <h5>Restaurante: <strong>@{{restaurantName}}</strong></h5>
+                </div>
+            </div>
             <div class="col-md-5">
                 <custom-card
                     card-title="Mis Categorías"
@@ -61,11 +66,11 @@
                             <tbody>
                             <tr v-for="(plate, index) in plates">
                                 <th>@{{ index + 1 }}.</th>
-                                <td>@{{ category.name }}</td>
-                                <td>@{{ category.price }}</td>
+                                <td>@{{ plate.name }}</td>
+                                <td>@{{ plate.price }}</td>
                                 <td>
-                                    <button class="btn btn-outline-success btn-sm" v-on:click="showModalPlate(category.id)"><i class="fa fa-eye"></i> Ver</button>
-                                    <button class="btn btn-outline-danger btn-sm" v-on:click="softDeletePlate(category.id)"><i class="fa fa-trash"></i> Eliminar</button>
+                                    <button class="btn btn-outline-success btn-sm" v-on:click="showModalPlate(plate.id)"><i class="fa fa-eye"></i> Ver</button>
+                                    <button class="btn btn-outline-danger btn-sm" v-on:click="softDeletePlate(plate.id)"><i class="fa fa-trash"></i> Eliminar</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -103,12 +108,36 @@
             :button-title="buttonModalTitle"
             @button-action="savePlate">
             <div class="row">
-                <div class="col-md-12 col-lg-12 col-xl-12 mt-2">
+                <div class="col-md-12 col-lg-4 col-xl-4 d-flex justify-content-center">
+                    <vue-upload-multiple-image
+                        drag-text="Arrastrar imagen"
+                        browse-text="Seleccionar imagen"
+                        primary-text="Imagen principal"
+                        popup-text="Esta imagen se mostrará en el perfil del usuario"
+                        drop-text="Soltar aquí"
+                        :data-images="image"
+                        :show-edit="showEdit"
+                        :multiple="isMultiple"
+                        @upload-success="uploadImageSuccess"
+                        @before-remove="beforeRemove">
+                    </vue-upload-multiple-image>
+                </div>
+                <div class="col-md-12 col-lg-8 col-xl-8 mt-2">
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label for="name">Nombre del plato:</label>
                             <input type="text" class="form-control" id="name" placeholder="Nombre del plato" v-model="viewModel.name">
                             <span v-if="showError && validations.name !== undefined" class="text-danger font-weight-light">@{{validations.name[0]}}</span>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="description">Descripción:</label>
+                            <textarea class="form-control" id="description" placeholder="Descripción" v-model="viewModel.description" rows="3"></textarea>
+                            <span v-if="showError && validations.description !== undefined" class="text-danger font-weight-light">@{{validations.description[0]}}</span>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="price">Precio (S/.):</label>
+                            <input type="number" class="form-control" id="price" placeholder="0" v-model="viewModel.price">
+                            <span v-if="showError && validations.price !== undefined" class="text-danger font-weight-light">@{{validations.price[0]}}</span>
                         </div>
                     </div>
                 </div>

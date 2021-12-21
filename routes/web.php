@@ -19,10 +19,10 @@ Route::group(['middleware'=>['auth']], function ()
     });
 
     //HOME USER
-    Route::prefix('homeUser')->middleware('role:admin')->group(function ()
+    Route::prefix('homeUser')->middleware('role:admin|super')->group(function ()
     {
-        Route::get('/', ['App\Http\Controllers\HomeUserController', 'index']);
-        Route::get('jsonIndex/{filterText?}', ['App\Http\Controllers\HomeUserController', 'jsonIndex']);
+        Route::get('/{idUser?}', ['App\Http\Controllers\HomeUserController', 'index']);
+        Route::get('jsonIndex/{idUser?}/{filterText?}', ['App\Http\Controllers\HomeUserController', 'jsonIndex']);
     });
 
     //USER
@@ -36,11 +36,11 @@ Route::group(['middleware'=>['auth']], function ()
     });
 
     //RESTAURANT
-    Route::prefix('restaurant')->middleware('role:admin')->group(function ()
+    Route::prefix('restaurant')->middleware('role:admin|super')->group(function ()
     {
-        Route::get('/', ['App\Http\Controllers\RestaurantController', 'index']);
-        Route::get('jsonIndex/{filterText?}', ['App\Http\Controllers\RestaurantController', 'jsonIndex']);
-        Route::get('create', ['App\Http\Controllers\RestaurantController', 'create']);
+        //Route::get('/', ['App\Http\Controllers\RestaurantController', 'index']);
+        //Route::get('jsonIndex/{filterText?}', ['App\Http\Controllers\RestaurantController', 'jsonIndex']);
+        Route::get('create/{idUser?}', ['App\Http\Controllers\RestaurantController', 'create']);
         Route::get('jsonCreate', ['App\Http\Controllers\RestaurantController', 'jsonCreate']);
         Route::post('store', ['App\Http\Controllers\RestaurantController', 'store']);
         Route::get('update/{id}', ['App\Http\Controllers\RestaurantController', 'update']);
@@ -58,16 +58,16 @@ Route::group(['middleware'=>['auth']], function ()
     });
 
     //PLATE
-    Route::prefix('plate')->middleware('role:admin')->group(function () {
-        Route::get('{id}', ['App\Http\Controllers\PlateController', 'index']);
-        Route::get('jsonIndex/{id}/{filterText?}', ['App\Http\Controllers\PlateController', 'jsonIndex']);
-        Route::get('jsonIndexPlate/{id}/{filterText?}', ['App\Http\Controllers\PlateController', 'jsonIndexPlate']);
-        Route::get('jsonCreate', ['App\Http\Controllers\PlateController', 'jsonCreate']);
+    Route::prefix('plate')->middleware('role:admin|super')->group(function () {
+        Route::get('{idRestaurant?}', ['App\Http\Controllers\PlateController', 'index']);
+        Route::get('jsonIndex/{idRestaurant}/{filterText?}', ['App\Http\Controllers\PlateController', 'jsonIndex']);
+        Route::get('jsonIndexPlate/{idPlate}/{filterText?}', ['App\Http\Controllers\PlateController', 'jsonIndexPlate']);
+        Route::get('jsonCreate/{idPlate?}', ['App\Http\Controllers\PlateController', 'jsonCreate']);
         Route::post('store', ['App\Http\Controllers\PlateController', 'store']);
-        Route::get('jsonDetail/{id}', ['App\Http\Controllers\PlateController', 'jsonDetail']);
+        Route::get('jsonDetail/{idPlate}', ['App\Http\Controllers\PlateController', 'jsonDetail']);
 
         Route::get('jsonCreateCategory/{discriminator?}', ['App\Http\Controllers\CategoryController', 'jsonCreate']);
         Route::post('storeCategory', ['App\Http\Controllers\CategoryController', 'store']);
-        Route::get('jsonDetailCategory/{id}', ['App\Http\Controllers\CategoryController', 'jsonDetail']);
+        Route::get('jsonDetailCategory/{idCategory}', ['App\Http\Controllers\CategoryController', 'jsonDetail']);
     });
 });

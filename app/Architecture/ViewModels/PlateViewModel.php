@@ -11,7 +11,7 @@ class PlateViewModel
     protected $description;
     protected $price;
     protected $state;
-    protected $image;
+    protected $avatar;
     protected $idCategory;
 
     public function __construct()
@@ -26,7 +26,7 @@ class PlateViewModel
         $this->description = $model->description;
         $this->price = $model->price;
         $this->state = $model->state;
-        $this->image = $model->image;
+        $this->avatar = $model->avatar;
         $this->idCategory = $model->idCategory;
 
         return $this;

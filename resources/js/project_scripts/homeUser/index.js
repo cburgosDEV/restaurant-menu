@@ -4,7 +4,8 @@ let vue = new Vue({
 
     },
     data: {
-        url: $('#baseUrl').val() + 'homeUser',
+        url: $('#baseUrl').val(),
+        idUser: $('#idUser').val(),
         filterText: '',
         restaurants : [],
         paginate: {},
@@ -28,7 +29,7 @@ let vue = new Vue({
         },
         initList: function(page = 1){
             loading(true);
-            let url = this.url + "/jsonIndex/" + this.filterText + '?page=' + page;
+            let url = this.url + "homeUser/jsonIndex/" + this.idUser + '/' + this.filterText + '?page=' + page;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("initList", response.data);
             }).catch((error) => {
@@ -41,5 +42,8 @@ let vue = new Vue({
             this.filterText = filterText;
             this.initList();
         },
+        createRestaurant: function (){
+            window.location.href = this.url + 'restaurant/create/' + this.idUser;
+        }
     },
 });

@@ -45,7 +45,7 @@ class UserRepository
         $model = User::select('users.*')
             ->where('users.state', true)
             ->orderBy('users.name')
-            ->filtersToIndexUser($filterText)
+            ->filtersToIndex($filterText)
             ->paginate($pages);
 
         $paginatorHelper = new PaginatorHelper();
@@ -61,6 +61,9 @@ class UserRepository
     {
         $model = User::select('users.id', 'users.name')
             ->where('users.state', true)
+            ->with(['restaurants' => function ($query){
+
+            }])
             ->orderBy('users.name')
             ->filtersToIndexHome($filterText)
             ->paginate($pages);

@@ -90,7 +90,7 @@
                 <div class="row mt-4">
                     <div class="col-md-12 d-flex justify-content-center">
                         <button class="btn btn-primary mx-1" v-on:click="save"><i class="fa fa-save"></i> Guardar</button>
-                        <a href="{{'../../homeUser'}}" class="btn btn-secondary mx-1"><i class="fa fa-arrow-left"></i> Volver</a>
+                        <a :href="'{{'../../homeUser'}}' + '/' + viewModel.idUser" class="btn btn-secondary mx-1"><i class="fa fa-arrow-left"></i> Volver</a>
                     </div>
                 </div>
             </div>

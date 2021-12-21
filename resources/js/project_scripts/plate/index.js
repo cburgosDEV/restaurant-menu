@@ -1,13 +1,16 @@
+import VueUploadMultipleImage from 'vue-upload-multiple-image';
+
 let vue = new Vue({
     el: '#index',
     components: {
-
+        VueUploadMultipleImage
     },
     data: {
         url: $('#baseUrl').val() + 'plate',
         idRestaurant: $('#idRestaurant').val(),
         idCategory: 0,
         discriminator: "PLATE",
+        restaurantName: '',
 
         //CATEGORY
         filterTextCategory: '',
@@ -18,6 +21,12 @@ let vue = new Vue({
         filterTextPlate: '',
         plates: [],
         isEditFormPlate: false,
+
+        //PLATE IMAGE
+        image: [],
+        imagePath: [],
+        showEdit: false,
+        isMultiple: false,
 
         //BOTH
         viewModel: {},
@@ -36,7 +45,8 @@ let vue = new Vue({
         switchResponseServer: function (switchAction, response){
             switch (switchAction){
                 case 'initList':
-                    this.categories = response;
+                    this.categories = response.categories;
+                    this.restaurantName = response.restaurantName;
                     break;
                 case 'initListPlate':
                     this.plates = response;
@@ -59,7 +69,7 @@ let vue = new Vue({
                 case 'storePlate':
                     if(response){
                         showToast('success', 'Operación realizada correctamente');
-                        this.initList();
+                        this.initListPlate(this.idCategory);
                         $('#PlateModal').modal('hide');
                     } else {
                         showToast('error', 'Ocurrió un error al guardar el registro');
@@ -186,7 +196,7 @@ let vue = new Vue({
         },
         initFormCreatePlate: function (){
             loading(true);
-            let url = this.url + "/jsonCreate";
+            let url = this.url + "/jsonCreate/0" ;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("jsonCreate", response.data);
             }).catch((error) => {
@@ -203,6 +213,7 @@ let vue = new Vue({
             }).catch((error) => {
 
             }).finally((response) => {
+                this.setImageToShow(this.viewModel.avatar);
                 loading(false);
                 if(callback){
                     callback();
@@ -211,7 +222,9 @@ let vue = new Vue({
         },
         savePlate: function () {
             let url = this.url + "/store";
+            if(this.imagePath.length>0)this.viewModel.image = this.imagePath[0].path;
             this.viewModel.idCategory = this.idCategory;
+            this.viewModel.idRestaurant = this.idRestaurant;
             loading(true);
             window.axios.post(url, this.viewModel).then((response) => {
                 this.switchResponseServer("storePlate", response.data);
@@ -249,6 +262,29 @@ let vue = new Vue({
             this.viewModel = {};
             this.modalTitle = '';
             this.buttonModalTitle = '';
+            this.image = [];
+            this.imagePath = [];
+        },
+        //PLATE IMAGE
+        uploadImageSuccess(formData, index, fileList) {
+            this.imagePath = fileList;
+        },
+        beforeRemove (index, done, fileList) {
+            let r = true;
+            if (r) {
+                this.viewModel.isImageDeleted = true;
+                done();
+            }
+        },
+        setImageToShow: function (image){
+            this.image.push(
+                {
+                    path: '../storage/'+image,
+                    default: 1,
+                    highlight: 1,
+                    caption: 'Plate'
+                }
+            );
         },
     },
 });
