@@ -53,7 +53,7 @@ class RestaurantRepository
         $model = Restaurant::select('restaurant.*')
             ->where('restaurant.state', true)
             ->orderBy('restaurant.name')
-            ->filtersToIndexRestaurant($filterText)
+            ->filtersToIndex($filterText)
             ->paginate($pages);
 
         $paginatorHelper = new PaginatorHelper();

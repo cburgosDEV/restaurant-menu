@@ -8,5 +8,6 @@
     "/js/restaurant/update.js": "/js/restaurant/update.js",
     "/js/category/index.js": "/js/category/index.js",
     "/js/plate/index.js": "/js/plate/index.js",
+    "/js/profile/index.js": "/js/profile/index.js",
     "/css/app.css": "/css/app.css"
 }

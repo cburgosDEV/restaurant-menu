@@ -70,4 +70,12 @@ Route::group(['middleware'=>['auth']], function ()
         Route::post('storeCategory', ['App\Http\Controllers\CategoryController', 'store']);
         Route::get('jsonDetailCategory/{idCategory}', ['App\Http\Controllers\CategoryController', 'jsonDetail']);
     });
+
+    //PROFILE
+    Route::prefix('profile')->middleware('role:admin|super')->group(function () {
+        Route::get('', ['App\Http\Controllers\ProfileController', 'index']);
+        Route::get('jsonIndex', ['App\Http\Controllers\ProfileController', 'jsonIndex']);
+        Route::post('store', ['App\Http\Controllers\ProfileController', 'store']);
+        Route::post('changePassword', ['App\Http\Controllers\ProfileController', 'changePassword']);
+    });
 });

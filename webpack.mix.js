@@ -23,3 +23,6 @@ mix.js('resources/js/project_scripts/category/index.js', 'public/js/category');
 
 //PLATE
 mix.js('resources/js/project_scripts/plate/index.js', 'public/js/plate');
+
+//PROFILE
+mix.js('resources/js/project_scripts/profile/index.js', 'public/js/profile');
