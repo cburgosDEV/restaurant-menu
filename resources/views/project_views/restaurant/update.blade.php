@@ -67,9 +67,9 @@
                             <vue-upload-multiple-image
                                 drag-text="Arrastrar imagen"
                                 browse-text="Seleccionar imagen"
-                                primary-text="Imagen principal"
-                                mark-is-primary-text="Marcar como imagen principal"
-                                popup-text="Esta imagen se mostrará  en la portada del restaurante"
+                                primary-text="Logo"
+                                mark-is-primary-text="Marcar como imagen principal (logo)"
+                                popup-text="Esta imagen es el logo del restaurant"
                                 drop-text="Soltar aquí"
                                 :data-images="images"
                                 id-upload="myIdUpload"
