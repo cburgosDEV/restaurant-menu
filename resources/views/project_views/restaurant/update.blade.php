@@ -69,7 +69,7 @@
                                 browse-text="Seleccionar imagen"
                                 primary-text="Logo"
                                 mark-is-primary-text="Marcar como imagen principal (logo)"
-                                popup-text="Esta imagen es el logo del restaurant"
+                                popup-text="Esta imagen es el logo del restaurante"
                                 drop-text="Soltar aquí"
                                 :data-images="images"
                                 id-upload="myIdUpload"
