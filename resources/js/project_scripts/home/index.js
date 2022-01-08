@@ -25,8 +25,6 @@ let vue = new Vue({
             }
         },
         initList: function(page = 1){
-            console.log($('#baseUrl').val());
-            console.log(this.url);
             loading(true);
             let url = this.url + "jsonIndex/" + this.filterText + '?page=' + page;
             window.axios.get(url).then((response) => {
