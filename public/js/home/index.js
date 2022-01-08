@@ -29,6 +29,8 @@ var vue = new Vue({
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      console.log($('#baseUrl').val());
+      console.log(this.url);
       loading(true);
       var url = this.url + "jsonIndex/" + this.filterText + '?page=' + page;
       window.axios.get(url).then(function (response) {
