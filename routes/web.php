@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
+
+if(config('app.env') !== 'local'){
+    URL::forceScheme('https');
+}
 
 //LOGIN AND LOGOUT
 Route::get('login', ['App\Http\Controllers\Auth\LoginController', 'showLoginForm'])->name('login');
