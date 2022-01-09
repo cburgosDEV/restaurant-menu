@@ -17,8 +17,6 @@ class HomeController extends Controller
 
     public function index()
     {
-        $idUser = 0;
-        $userName = '';
         if($this->userService->getById(Auth::id())->getRoleNames()[0]=='super') return view('home');
         else return redirect('homeUser');
     }
