@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://menu-cajamarca.herokuapp.com/'),
+    'url' => env('APP_URL', 'https://www.menu-cajamarca.online/'),
 
     'asset_url' => env('ASSET_URL', null),
 
