@@ -47430,7 +47430,7 @@ var vue = new Vue({
       var _this = this;
 
       loading(true);
-      var url = this.url + "/jsonIndex/" + this.idRestaurant + "/" + this.filterTextCategory;
+      var url = this.url + "/jsonIndex/" + this.idRestaurant + (this.filterTextCategory === '' ? '' : '/') + this.filterTextCategory;
       window.axios.get(url).then(function (response) {
         _this.switchResponseServer("initList", response.data);
       })["catch"](function (error) {})["finally"](function (response) {
@@ -47529,7 +47529,7 @@ var vue = new Vue({
 
       this.idCategory = idCategory;
       loading(true);
-      var url = this.url + "/jsonIndexPlate/" + idCategory + "/" + this.filterTextPlate;
+      var url = this.url + "/jsonIndexPlate/" + idCategory + (this.filterTextPlate === '' ? '' : '/') + this.filterTextPlate;
       window.axios.get(url).then(function (response) {
         _this6.switchResponseServer("initListPlate", response.data);
       })["catch"](function (error) {})["finally"](function (response) {

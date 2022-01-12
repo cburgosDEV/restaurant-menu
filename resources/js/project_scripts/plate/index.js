@@ -80,7 +80,7 @@ let vue = new Vue({
         //CATEGORY
         initList: function(){
             loading(true);
-            let url = this.url + "/jsonIndex/" + this.idRestaurant + "/" + this.filterTextCategory;
+            let url = this.url + "/jsonIndex/" + this.idRestaurant + (this.filterTextCategory === '' ? '' : '/') + this.filterTextCategory;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("initList", response.data);
             }).catch((error) => {
@@ -170,7 +170,7 @@ let vue = new Vue({
         initListPlate: function(idCategory){
             this.idCategory = idCategory;
             loading(true);
-            let url = this.url + "/jsonIndexPlate/" + idCategory + "/" + this.filterTextPlate;
+            let url = this.url + "/jsonIndexPlate/" + idCategory + (this.filterTextPlate === '' ? '' : '/') + this.filterTextPlate;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("initListPlate", response.data);
             }).catch((error) => {

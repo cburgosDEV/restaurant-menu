@@ -11,7 +11,7 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Código</th>
                         <th>Nombre del usuario</th>
                         <th>Restaurantes</th>
                         <th>Opciones</th>
@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="(user, index) in users">
-                        <th>@{{ index + 1 }}.</th>
+                        <th>@{{ user.id }}.</th>
                         <td>@{{ user.name }}</td>
                         <td>@{{ user.restaurants.length }}</td>
                         <td>

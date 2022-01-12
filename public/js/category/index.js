@@ -56,7 +56,7 @@ var vue = new Vue({
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       loading(true);
-      var url = this.url + "/jsonIndex/" + this.discriminator + '/' + this.filterText + '?page=' + page;
+      var url = this.url + "/jsonIndex/" + this.discriminator + (this.filterText === '' ? '' : '/') + this.filterText + '?page=' + page;
       window.axios.get(url).then(function (response) {
         _this.switchResponseServer("initList", response.data);
       })["catch"](function (error) {})["finally"](function (response) {

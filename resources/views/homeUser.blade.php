@@ -18,14 +18,14 @@
                         <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th>Código</th>
                                 <th>Nombre del restaurante</th>
                                 <th>Opciones</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="(item, index) in restaurants">
-                                <th>@{{ index + 1 }}.</th>
+                                <th>@{{ item.id }}.</th>
                                 <td>@{{ item.name }}</td>
                                 <td>
                                     <a :href="'{{'../restaurant/update'}}' + '/' + item.id" class="btn btn-outline-success btn-sm"><i class="fa fa-eye"></i> Ver</a>

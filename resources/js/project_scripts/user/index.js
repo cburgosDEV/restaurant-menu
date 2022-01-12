@@ -60,7 +60,7 @@ let vue = new Vue({
         },
         initList: function(page = 1){
             loading(true);
-            let url = this.url + "/jsonIndex/" + this.filterText + '?page=' + page;
+            let url = this.url + "/jsonIndex" + (this.filterText === '' ? '' : '/') + this.filterText + '?page=' + page;
             window.axios.get(url).then((response) => {
                 this.switchResponseServer("initList", response.data);
             }).catch((error) => {

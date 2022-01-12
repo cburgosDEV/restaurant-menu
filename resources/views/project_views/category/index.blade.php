@@ -13,14 +13,14 @@
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Código</th>
                     <th>Nombre de la categoría</th>
                     <th>Opciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr v-for="(category, index) in categories">
-                    <th>@{{ index + 1 }}.</th>
+                    <th>@{{ category.id }}.</th>
                     <td>@{{ category.name }}</td>
                     <td>
                         <button class="btn btn-outline-success btn-sm" v-on:click="showModal(category.id)"><i class="fa fa-eye"></i> Ver</button>
